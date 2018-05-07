@@ -1,7 +1,7 @@
 #include <FastLED.h>
 #define LED_PIN     7   // what pin the signal is being sent from
 #define NUM_LEDS    150 // maximum lights attached to your line
-#define DELAY       33  // maximum speed the lights move along the lin
+#define DELAY       33  // maximum speed the lights move along the line
 #define MAX_LEDS_ON 4   // This number will be doubled.
                         // The maximum lights to have turned on for each end of the line.
                         // Keep this low if you have limited power supply.
