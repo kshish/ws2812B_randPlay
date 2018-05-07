@@ -1,0 +1,42 @@
+#include <FastLED.h>
+#define LED_PIN     7   // what pin the signal is being sent from
+#define NUM_LEDS    150 // maximum lights attached to your line
+#define DELAY       33  // maximum speed the lights move along the lin
+#define MAX_LEDS_ON 4   // This number will be doubled.
+                        // The maximum lights to have turned on for each end of the line.
+                        // Keep this low if you have limited power supply.
+
+long randR;             // store random numbers for color, delay, and how many lights on each side
+long randG;
+long randB;
+long randDelay;         
+long rand_LEDS_On;
+
+CRGB leds[NUM_LEDS];    // array to keep track of 
+
+void setup() {
+  FastLED.addLeds<WS2812, LED_PIN, GRB>(leds, NUM_LEDS);
+  randomSeed(analogRead(0));
+}
+
+void loop() {
+  randRGB();            // get random colors
+  randDelay = random(DELAY);  // random speed light moves from one end of the line to the other
+  rand_LEDS_On = random(MAX_LEDS_ON); // how many lights 
+  
+  // move the lights from each end
+  for (int i = 0 + rand_LEDS_On; i <= NUM_LEDS; i++) {
+    leds[i] = CRGB ( randR, randG, randB);   // start at one end
+    leds[NUM_LEDS-i] = CRGB (255-randR, 255-randG, 255-randB); // start at the other end
+    FastLED.show();
+    delay(randDelay);
+    leds[i-rand_LEDS_On] = CRGB ( 0, 0, 0);
+    leds[NUM_LEDS-i+rand_LEDS_On] = CRGB ( 0, 0, 0);
+   }
+}
+
+void randRGB() {
+  randR = random(256);
+  randG = random(256);
+  randB = random(256);
+}
